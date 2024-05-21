@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet, TextInput } from "react-native";
 import React from "react";
 import { useUser } from "@clerk/clerk-expo";
-import  Colors  from "../../Utils/Colors";
+import Colors from "../../../Utils/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 
 export default function Header() {
@@ -15,11 +15,24 @@ export default function Header() {
             <Image source={{ uri: user?.imageUrl }} style={styles.userImage} />
           </View>
           <View>
-          <Text style={{ fontSize: 12, color: Colors.WHITE, fontFamily: "outfit" }}>Welcome, </Text>
-          <Text style={{ fontSize: 20, color: Colors.WHITE, fontFamily: "outfit-medium" }}>
-            {user?.fullName}
-          </Text>
-
+            <Text
+              style={{
+                fontSize: 12,
+                color: Colors.WHITE,
+                fontFamily: "outfit",
+              }}
+            >
+              Welcome,{" "}
+            </Text>
+            <Text
+              style={{
+                fontSize: 20,
+                color: Colors.WHITE,
+                fontFamily: "outfit-medium",
+              }}
+            >
+              {user?.fullName}
+            </Text>
           </View>
           <View style={styles.bMark}>
             <FontAwesome name="bookmark" size={25} color="white" />

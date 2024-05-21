@@ -1,48 +1,71 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
-import Header from "./Header";
-import Catagory from "./Components/Catagory"
-import Slider from "./Slider";
+import Header from "./Components/Header";
+import Category from "./Components/Category";
+import SmallSlider from "./Components/smallSlider";
+import Slider from "./Components/Slider";
 import { getFirestore, getDocs, collection } from "firebase/firestore";
-import { app } from '../../Utils/firebaseConfig';
+import { app } from "../../Utils/firebaseConfig";
 
 export default function HomeScreen() {
-
   const db = getFirestore(app);
 
-  const [sliderList,setSliderList]=useState([])
-  const [catagoryList,setCatagoryList]=useState([])
+  const [sliderList, setSliderList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+  const [smallSliderList, setSmallSliderList] = useState([]);
 
-  useEffect (()=>{
-      getsliderList()
-      getCatagoryList()
-  },[])
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-const getsliderList = async ()=> {
-  setSliderList([])
-  const querySnapshot = await getDocs(collection(db, "slider"));
+  const fetchData = async () => {
+    await Promise.all([
+      getSliderList(),
+      getCategoryList(),
+      getSmallSliderList(),
+    ]);
+  };
+
+  const getSliderList = async () => {
+    const querySnapshot = await getDocs(collection(db, "slider"));
+    const list = [];
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      // console.log(doc.id, " => ", doc.data());
-      setSliderList(sliderList=>[...sliderList,doc.data()])
+      list.push(doc.data());
     });
-}
+    setSliderList(list);
+  };
 
-const getCatagoryList = async ()=> {
-  setCatagoryList([])
-  const querySnapshot = await getDocs(collection(db, "categories"));
+  const getCategoryList = async () => {
+    const querySnapshot = await getDocs(collection(db, "categories"));
+    const list = [];
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      // console.log(doc.id, " => ", doc.data());
-      setCatagoryList(catagoryList=>[...catagoryList,doc.data()])
+      list.push(doc.data());
     });
-}
+    setCategoryList(list);
+  };
+
+  const getSmallSliderList = async () => {
+    const querySnapshot = await getDocs(collection(db, "smallSlider"));
+    const list = [];
+    querySnapshot.forEach((doc) => {
+      list.push(doc.data());
+    });
+    setSmallSliderList(list);
+  };
 
   return (
-    <View>
+    <ScrollView style={styles.container}>
       <Header />
-      <Catagory catagoryList={catagoryList}/>
+      <Category categoryList={categoryList} />
       <Slider sliderList={sliderList} />
-    </View>
+      <SmallSlider smallSliderList={smallSliderList} />
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+});
