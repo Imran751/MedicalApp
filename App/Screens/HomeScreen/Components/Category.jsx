@@ -1,8 +1,21 @@
-import { View, Text, FlatList, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 import Colors from "../../../Utils/Colors";
 
 export default function Category({ categoryList }) {
+  const handleCategoryPress = (category) => {
+    // Handle the category press event
+    console.log("Selected category:", category);
+    // Add your logic here (e.g., navigation, fetching data, etc.)
+  };
+
   return (
     <View>
       <Text
@@ -14,21 +27,25 @@ export default function Category({ categoryList }) {
           paddingTop: 20,
         }}
       >
-        Select the CATEGORY..{" "}
+        Select the CATEGORY..
       </Text>
       <FlatList
         data={categoryList}
         numColumns={4}
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item, index }) => (
-          <View>
-            <Image source={{ uri: item?.image }} style={styles.image} />
-          </View>
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => handleCategoryPress(item)}>
+            <View>
+              <Image source={{ uri: item?.image }} style={styles.image} />
+            </View>
+          </TouchableOpacity>
         )}
+        keyExtractor={(item, index) => index.toString()}
       />
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   image: {
     height: 70,

@@ -17,3 +17,14 @@ git checkout development
 
 git clone --branch development <repository_url>
 (to clone the development branch)
+
+#for build
+create an account on expo.dev
+install eas cli
+npm install -g eas-cli
+eas login
+eas build: configure
+check eas.json
+eas build -p andriod -e preview
+AAB file for Andriod
+IPA file ofr ioS -Archives
