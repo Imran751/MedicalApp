@@ -14,7 +14,7 @@ export default function Slider({ sliderList }) {
           paddingTop: 30,
         }}
       >
-        Meet our DOCTORS..{" "}
+        Our SEERVICES..{" "}
       </Text>
       <FlatList
         data={sliderList}

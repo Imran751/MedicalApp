@@ -25,6 +25,6 @@ npm install -g eas-cli
 eas login
 eas build: configure
 check eas.json
-eas build -p andriod -e preview
+eas build -p android -e preview
 AAB file for Andriod
 IPA file ofr ioS -Archives
